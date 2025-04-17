@@ -3,7 +3,7 @@ import numpy as np
 import scanpy as sc
 from scipy import sparse
 
-def preprocess_cells(adata, min_cells, min_genes, pct_mito, n_hvgs):
+def preprocess_cells(adata, min_cells=3, min_genes=12, pct_mito=5, n_hvgs=50):
     """
     Preprocess and clean up scRNAseq data.
 
@@ -59,8 +59,11 @@ if __name__ == '__main__':
         snakemake = None
     if snakemake is not None:
         # read in data
-        adata = sc.read()
+        print(f"input: {snakemake.input[0]}")
+        print(f"output: {snakemake.output[0]}")
+
+        adata = sc.read(snakemake.input[0])
         # preprocess cells + genes
         out = preprocess_cells(adata)
         # write processed data to h5ad file
-        adata.write()
+        adata.write(snakemake.output[0])
