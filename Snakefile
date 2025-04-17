@@ -1,6 +1,8 @@
 # Pipeline to download, preprocess, cluster, and plot cells in example scRNAseq data
 # @authors: Dakota Hawkins and Emma Briars
-
+rule all:
+  output:
+    "data_download/{sample}.h5ad"
 
 # This should call the download_data.py Python script to download data.
 # You will need to tell the script which dataset you want to download, and the
@@ -9,6 +11,10 @@
 # produced by each rule to unique directories.
 # allowable: paul, moignard, pbmc3k
 rule download_data:
+  output:
+    "download_data/{sample}.h5ad"
+  script:
+    "scripts/download_data.py"
 
 # This rule should preprocess downloaded data by calling the `preprocess.py`
 # Python script.
@@ -16,6 +22,10 @@ rule download_data:
 # of provided parameters as explained in the github issue. The rule should write
 # the newly processed data to a new `.h5ad` file. 
 rule preprocess_data:
+#  input:
+#  output:
+#  script:
+#    scripts/preprocess_data.py
 
 
 # This rule should cluster cells using the `cluster_cells.py` script.
@@ -23,6 +33,10 @@ rule preprocess_data:
 # provided parameters, k and resolution. The rule should produce 3 output files
 # as csvs: a count matrix, a cell metadata table, and a gene metadata table.
 rule cluster_cells:
+#  input:
+#  output:
+#  script:
+#    scripts/cluster_cells.py
 
 
 # This rule should plot clusters on UMAP projections using ggplot and the 
@@ -30,3 +44,8 @@ rule cluster_cells:
 # the rule should read in the previously generated csvs, color cells according
 # to values in a user-specified column, and create a .png file containing the plot
 rule plot_clusters:
+#  input:
+#  output:
+#  script:
+#    scripts/plot_clusters.py
+
