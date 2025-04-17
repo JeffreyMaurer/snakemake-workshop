@@ -59,9 +59,6 @@ if __name__ == '__main__':
         snakemake = None
     if snakemake is not None:
         # read in data
-        print(f"input: {snakemake.input[0]}")
-        print(f"output: {snakemake.output[0]}")
-
         adata = sc.read(snakemake.input[0])
         # preprocess cells + genes
         out = preprocess_cells(adata)
