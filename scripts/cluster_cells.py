@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import scanpy as sc
 
-def cluster_cells(adata, k, res):
+def cluster_cells(adata, k=50, res=0.25):
     """
     Cluster cells using louvain community detection
 
@@ -34,11 +34,15 @@ if __name__ == '__main__':
         snakemake = None
     if snakemake is not None:
         # read in data using sc.read()
-        adata = sc.read()
+        print(snakemake.input[0])
+        adata = sc.read(snakemake.input[0])
+        print(f"adata: {adata}")
         out = cluster_cells(adata)
+        print(f"out: {out}")
+        print(f"out size: {out.X}")
         # writes count matrix to a csv file
-        np.savetxt(, out.X, delimiter=',')
+        np.savetxt(snakemake.output["counts"], out.X.toarray(), delimiter=',')
         # writes cell observation/metadata to csv file
-        out.obs.to_csv()
+        out.obs.to_csv(snakemake.output["cell"])
         # writes gene metadata to csv file
-        out.var.to_csv()
+        out.var.to_csv(snakemake.output["gene"])

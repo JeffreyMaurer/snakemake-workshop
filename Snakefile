@@ -35,10 +35,14 @@ rule preprocess:
 # provided parameters, k and resolution. The rule should produce 3 output files
 # as csvs: a count matrix, a cell metadata table, and a gene metadata table.
 rule cluster_cells:
-#  input:
-#  output:
-#  script:
-#    scripts/cluster_cells.py
+  input:
+    "preprocess/{sample}.h5ad"
+  output:
+    counts="cluster/{sample}.csv",
+    cell="cluster/{sample}_cell.csv",
+    gene="cluster/{sample}_gene.csv"
+  script:
+    "scripts/cluster_cells.py"
 
 
 # This rule should plot clusters on UMAP projections using ggplot and the 
